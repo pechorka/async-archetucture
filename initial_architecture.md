@@ -15,7 +15,7 @@ Tasks:
 4) Deadline datetime
 5) CreatedBy uuid
 6) AssignedTo uuid
-7) AssignCost float // how much to deduct from popug account for task assigment
+7) AssignCost float // how much to deduct from popug account for task assignment
 8) Reward float // how much to add to popug account for task completion
 
 ### API
@@ -31,7 +31,7 @@ Tasks:
 
 AccountLog:
 1) UserID uuid
-2) Reason enum // enum values are: task assigment, task completion, pay day
+2) Reason enum // enum values are: task assignment, task completion, payday
 3) Sum float // can be positive or negative
 3) When datetime
 
@@ -45,11 +45,11 @@ AccountLog:
 ### Cron job
 
 Will start at the end of each day, receive balance for all users.
-If balance is positive, add log with reason "pay day" and positive balance sum
+If balance is positive, add log with reason "payday" and positive balance sum
 
 ## Auth service
 
-Takes care of authorisation and access level to services.
+Takes care of authorization and access level to services.
 
 ### Database structure
 
