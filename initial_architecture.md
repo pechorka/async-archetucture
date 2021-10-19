@@ -23,3 +23,26 @@ Tasks:
 1) Create task
 2) Re-assign tasks
 3) Complete task
+
+## Accounting service
+
+### Database structure
+
+AccountLog:
+1) UserID uuid
+2) Reason enum // enum values are: task assigment, task completion, pay day
+3) Sum float // can be positive or negative
+3) When datetime
+
+### API
+
+1) Balance for given day for all users
+2) Add log
+3) Balance for specified user
+4) Stats for all users or for specified user, depending on request
+
+### Cron job
+
+Will start at the end of each day, receive balance for all users.
+If balance is positive, add log with reason "pay day" and positive balance sum
+
