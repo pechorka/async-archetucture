@@ -23,6 +23,7 @@ Tasks:
 1) Create task
 2) Re-assign tasks
 3) Complete task
+4) List tasks
 
 ## Accounting service
 
@@ -46,3 +47,20 @@ AccountLog:
 Will start at the end of each day, receive balance for all users.
 If balance is positive, add log with reason "pay day" and positive balance sum
 
+## Auth service
+
+Takes care of authorisation and access level to services.
+
+### Database structure
+
+Role table:
+1) Name string
+2) Access map[string]bool // string - is a service name and bool is access level to a service. true - can read and write, false - can only read and null - no access
+3) Comment string
+
+Users table:
+1) Name string
+2) RoleID uuid
+3) Password string
+
+### API
