@@ -1,16 +1,16 @@
 # Initial architecture
 
-High level overview of service relationships here https://miro.com/app/board/o9J_lpuD3tE=/
+A high-level overview of service relationships here https://miro.com/app/board/o9J_lpuD3tE=/
 
 ## When something goes wrong
 1) Database failed: return 500 error and try to reconnect
 2) Message broker failed: 
-    send missed messages after connection re-established based on rows in databases with
+    send missed messages after a connection is re-established  based on rows in databases with
     technical flags like: isSendToMessageBroker=false
 3) Can't return a response to the user, because network connection is down: don't know what to do
 
 ## Questionable desicions
-1) For current small API, I think access restriction based on name is fine and implementing full blown RBAC will be waste of time. But if I am wrong, refactoring to RBAC will be not trivial
+1) For the current small API, I think access restriction based on name is fine, and implementing full-blown RBAC will be waste of time. But if I am wrong, refactoring to RBAC will be not trivial
 
 ## To watch out for
 1) I am not sure how to handle transactions properly in async services. I don't see problems at the moment, but I should be extra careful with them
@@ -58,13 +58,13 @@ AccountLog:
 Accounting api:
 1) Pay to all users (for cronjob)
 2) Add log (for task service). params - all fields in AccountLog
-3) Balance for regular user for today (to render dashboard for regular user)
-4) Balance for top manager for today (to render dashboard for regular user, for admin and for analytics)
+3) Balance for a regular user for today (to render dashboard for regular user)
+4) Balance for a top manager for today (to render dashboard for a regular user, for an admin and for an analytics)
 5) Audit log for regular user with infinite scroll (to render dashboard for regular user)
 6) Audit log for top manager with infinite scroll (to render dashboard for admin user)
 Analytics api:
-1) Count users with balance below zero
-2) Most expensive task for given period. params:
+1) Count users with a balance below zero
+2) Most expensive task for a given period. params:
     a) period: day, week, month
 
 ### Cron job
