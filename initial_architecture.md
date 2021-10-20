@@ -37,10 +37,16 @@ AccountLog:
 
 ### API
 
-1) Balance for given day for all users
-2) Add log
-3) Balance for specified user
-4) Stats for all users or for specified user, depending on request
+Accounting api:
+1) Balance for given day for all users (for cronjob)
+2) Add log (for cronjob and task service)
+3) Balance for regular user for today (to render dashboard for regular user)
+4) Balance for top manager for today (to render dashboard for regular user, for admin and for analytics)
+5) Audit log for regular user with infinite scroll (to render dashboard for regular user)
+6) Audit log for top manager with infinite scroll (to render dashboard for admin user)
+Analytics api:
+1) Count users with balance below zero
+2) Most expensive task for given period: day, week, month
 
 ### Cron job
 
