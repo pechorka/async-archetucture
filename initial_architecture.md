@@ -64,15 +64,16 @@ If balance is positive, add log with reason "payday" and positive balance sum
 Takes care of authorization and access level to services.
 
 ### Database structure
-
-Role table:
-1) Name string
-2) Access map[string]bool // string - is a service name and bool is access level to a service. true - can read and write, false - can only read and null - no access
-3) Comment string
-
 Users table:
 1) Name string
-2) RoleID uuid
+2) RoleName string
 3) Password string
 
 ### API
+1) Authorization. Returns access and refresh jwt tokens. params:
+    a) name
+    b) password
+2) Refresh tokens. params:
+    a) refresh token
+3) User names. params:
+    a) user ids
