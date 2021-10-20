@@ -50,8 +50,8 @@ AccountLog:
 ### API
 
 Accounting api:
-1) Balance for given day for all users (for cronjob)
-2) Add log (for cronjob and task service). params - all fields in AccountLog
+1) Pay to all users (for cronjob)
+2) Add log (for task service). params - all fields in AccountLog
 3) Balance for regular user for today (to render dashboard for regular user)
 4) Balance for top manager for today (to render dashboard for regular user, for admin and for analytics)
 5) Audit log for regular user with infinite scroll (to render dashboard for regular user)
@@ -63,8 +63,7 @@ Analytics api:
 
 ### Cron job
 
-Will start at the end of each day, receive balance for all users.
-If balance is positive, add log with reason "payday" and positive balance sum
+Will start at the end of each day and call "Pay to all users" api handler
 
 ## Auth service
 
