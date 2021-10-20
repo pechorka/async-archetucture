@@ -15,8 +15,8 @@ Tasks:
 4) Deadline datetime
 5) CreatedBy uuid
 6) AssignedTo uuid
-7) AssignCost float // how much to deduct from popug account for task assignment
-8) Reward float // how much to add to popug account for task completion
+7) AssignCost int // how much to deduct from popug account for task assignment
+8) Reward int // how much to add to popug account for task completion
 
 ### API
 
@@ -32,7 +32,7 @@ Tasks:
 AccountLog:
 1) UserID uuid
 2) Reason enum // enum values are: task assignment, task completion, payday
-3) Sum float // can be positive or negative
+3) Sum int // can be positive or negative
 3) When datetime
 
 ### API
