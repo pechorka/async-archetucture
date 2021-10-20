@@ -66,7 +66,7 @@ Takes care of authorization and access level to services.
 ### Database structure
 Users table:
 1) Name string
-2) RoleName string
+2) RoleName enum // enum values are: admin, manager, developer, auditor
 3) Password string
 
 ### API
