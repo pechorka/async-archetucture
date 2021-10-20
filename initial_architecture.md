@@ -2,6 +2,13 @@
 
 High level overview of service relationships here https://miro.com/app/board/o9J_lpuD3tE=/
 
+## When something goes wrong
+1) Database failed: return 500 error and try to reconnect
+2) Message broker failed: 
+    send missed messages after connection re-established based on rows in databases with
+    technical flags like: isSendToMessageBroker=false
+3) Can't return a response to the user, because network connection is down: don't know what to do
+
 ## Task service
 
 CRUD for tasks
