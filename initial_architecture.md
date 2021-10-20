@@ -1,6 +1,6 @@
 # Initial architecture
 
-High level overview of service relationships here <link to miro missing for now>
+High level overview of service relationships here https://miro.com/app/board/o9J_lpuD3tE=/
 
 ## Task service
 
