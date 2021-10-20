@@ -20,9 +20,14 @@ Tasks:
 
 ### API
 
-1) Create task
+1) Create task. params:
+    a) name
+    b) description
+    c) assignedTo
+    d) deadline
 2) Re-assign tasks
-3) Complete task
+3) Complete task. params:
+    a) taskID
 4) List tasks
 
 ## Accounting service
@@ -39,14 +44,15 @@ AccountLog:
 
 Accounting api:
 1) Balance for given day for all users (for cronjob)
-2) Add log (for cronjob and task service)
+2) Add log (for cronjob and task service). params - all fields in AccountLog
 3) Balance for regular user for today (to render dashboard for regular user)
 4) Balance for top manager for today (to render dashboard for regular user, for admin and for analytics)
 5) Audit log for regular user with infinite scroll (to render dashboard for regular user)
 6) Audit log for top manager with infinite scroll (to render dashboard for admin user)
 Analytics api:
 1) Count users with balance below zero
-2) Most expensive task for given period: day, week, month
+2) Most expensive task for given period. params:
+    a) period: day, week, month
 
 ### Cron job
 
