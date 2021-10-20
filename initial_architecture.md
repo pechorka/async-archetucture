@@ -9,6 +9,12 @@ High level overview of service relationships here https://miro.com/app/board/o9J
     technical flags like: isSendToMessageBroker=false
 3) Can't return a response to the user, because network connection is down: don't know what to do
 
+## Questionable desicions
+1) For current small API, I think access restriction based on name is fine and implementing full blown RBAC will be waste of time. But if I am wrong, refactoring to RBAC will be not trivial
+
+## To watch out for
+1) I am not sure how to handle transactions properly in async services. I don't see problems at the moment, but I should be extra careful with them
+
 ## Task service
 
 CRUD for tasks
