@@ -66,37 +66,45 @@ Command - Add audit log to user account
 Data - User ID, task cost, task description
 Event - Accounting.LogEntryAdded
 
-4) Requirement: считать сколько денег сотрудник получил за рабочий день
+4) Requirement: считать текущий баланс
+Analysis:
+Actor - "Accounting.LogEntryAdded" event
+Command - Update earned by user amount
+Data - UserID, Amount
+Event - Accounting.UserEarningsUpdated
+
+5) Requirement: выплата баланса на счет пользователя
 Analysis:
 Actor - Cronjob
-Command - Calculate earned by user amount
-Data - Nothing
-Event - Accounting.DailyEarnings
+Command - PayDay
+Data - [userID payAmount] - array
+Event - Accounting.PayDay
 
-5) Requirement: отправлять на почту сумму выплаты.
+6) Requirement: отправлять на почту сумму выплаты.
 Analysis:
-Actor - "Accounting.DailyEarnings" event
-Command - Notif
-Data - [userID userName payAmount] - array
+Actor - "Accounting.PayDay" event
+Command - Notify
+Data - userID userName payAmount
 Event - Emailer.PayNotification
 
-6) Requirement: После выплаты баланса (в конце дня) он должен обнуляться, и в аудитлоге всех операций аккаунтинга должно быть отображено, что была выплачена сумма.
+7) Requirement: После выплаты баланса (в конце дня) он должен обнуляться, и в аудитлоге всех операций аккаунтинга должно быть отображено, что была выплачена сумма.
 Analysis:
-Actor - "Accounting.DailyEarnings" event
+Actor - "Accounting.PayDay" event
 Command - Add audit log to user account
-Data - [userID userName payAmount] - array
+Data - userID payAmount
 Event - Accounting.LogEntryAdded
 
-7) Requirement: Дешборд должен выводить количество заработанных топ-менеджментом за сегодня денег.
+8) Requirement: Дешборд должен выводить количество заработанных топ-менеджментом за сегодня денег.
 Analysis:
 Actor - "Accounting.LogEntryAdded" event
 Command - Recalculate top earnings
 Data - amount
-Event - Accounting.TopManagerEarnings (?)
+Event - Accounting.TopManagerEarnings
 
-8) Requirement: Дашборд должен выводить информацию по дням, а не за весь период сразу.
+9) Requirement: Дашборд должен выводить информацию по дням, а не за весь период сразу.
 Analysis:
 Actor - Any user
 Command - Get audit log
 Data - userID
 Event - Accounting.AuditLogRequested (?)
+
