@@ -52,15 +52,51 @@ Data - User login and password
 Event - Accounting.Logined
 
 2) Requirement: У каждого из сотрудников должен быть свой счёт, который показывает, сколько за сегодня он получил денег. У счёта должен быть аудитлог того, за что были списаны или начислены деньги, с подробным описанием каждой из задач.
+Деньги списываются сразу после ассайна на сотрудника
 Analysis:
 Actor - "Task.Assigned" event
 Command - Add audit log to user account
 Data - User ID, task cost, task description
 Event - Accounting.LogEntryAdded
 
-3) Requirement: деньги списываются сразу после ассайна на сотрудника, а начисляются после выполнения задачи.
+3) Requirement: деньги начисляются после выполнения задачи.
 Analysis:
 Actor - "Task.Completed" event
 Command - Add audit log to user account
 Data - User ID, task cost, task description
 Event - Accounting.LogEntryAdded
+
+4) Requirement: считать сколько денег сотрудник получил за рабочий день
+Analysis:
+Actor - Cronjob
+Command - Calculate earned by user amount
+Data - Nothing
+Event - Accounting.DailyEarnings
+
+5) Requirement: отправлять на почту сумму выплаты.
+Analysis:
+Actor - "Accounting.DailyEarnings" event
+Command - Notif
+Data - [userID userName payAmount] - array
+Event - Emailer.PayNotification
+
+6) Requirement: После выплаты баланса (в конце дня) он должен обнуляться, и в аудитлоге всех операций аккаунтинга должно быть отображено, что была выплачена сумма.
+Analysis:
+Actor - "Accounting.DailyEarnings" event
+Command - Add audit log to user account
+Data - [userID userName payAmount] - array
+Event - Accounting.LogEntryAdded
+
+7) Requirement: Дешборд должен выводить количество заработанных топ-менеджментом за сегодня денег.
+Analysis:
+Actor - "Accounting.LogEntryAdded" event
+Command - Recalculate top earnings
+Data - amount
+Event - Accounting.TopManagerEarnings (?)
+
+8) Requirement: Дашборд должен выводить информацию по дням, а не за весь период сразу.
+Analysis:
+Actor - Any user
+Command - Get audit log
+Data - userID
+Event - Accounting.AuditLogRequested (?)
