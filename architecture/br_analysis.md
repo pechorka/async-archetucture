@@ -77,21 +77,21 @@ Event - Accounting.UserEarningsUpdated
 Analysis:
 Actor - Cronjob
 Command - PayDay
-Data - [UserID, TotalUserBalance] - array
-Event - Accounting.PayDay
+Data - [UserID, Amoun] - array
+Event - Biling.PayDay
 
 6) Requirement: отправлять на почту сумму выплаты.
 Analysis:
-Actor - "Accounting.PayDay" event
+Actor - "Biling.PayDay" event
 Command - Notify
 Data - Email, Amount
 Event - Emailer.PayNotification
 
 7) Requirement: После выплаты баланса (в конце дня) он должен обнуляться, и в аудитлоге всех операций аккаунтинга должно быть отображено, что была выплачена сумма.
 Analysis:
-Actor - "Accounting.PayDay" event
+Actor - "Biling.PayDay" event
 Command - Add audit log to user account
-Data - UserID, Amount
+Data - Amount, BillingInfo
 Event - Accounting.LogEntryAdded
 
 8) Requirement: Дешборд должен выводить количество заработанных топ-менеджментом за сегодня денег.
@@ -135,5 +135,5 @@ Event - Analytic.PopugEarningsUpdated
 Analysis:
 Actor - "Task.Appraised" event
 Command - UpdatePopugEarnings
-Data - Amount
+Data - TaskCost
 Event - Analytic.TaskCostListUpdated
