@@ -108,4 +108,32 @@ Command - Get audit log
 Data - UserID
 Event - Accounting.AuditLogRequested
 
+# Analytic requirements
 
+1) Requirement: Аналитика — это отдельный дашборд, доступный только админам.
+Analysis:
+Actor - Admin user
+Command - Login to analytic dashboard
+Data - UserAuthInfo
+Event - Analytic.Logined
+
+2) Requirement: Нужно указывать, сколько заработал топ-менеджмент за сегодня
+Analysis:
+Actor - "Accounting.TopManagerEarnings" event
+Command - Get top manager earnings
+Data - Amount
+Event - Analytic.TopManagerEarningsUpdated
+
+3) Requirement: Нужно указывать, сколько попугов ушло в минус.
+Analysis:
+Actor - "Accounting.LogEntryAdded" event
+Command - UpdatePopugEarnings
+Data - UserID, Amount
+Event - Analytic.PopugEarningsUpdated
+
+4) Requirement: Нужно показывать самую дорогую задачу за день, неделю или месяц.
+Analysis:
+Actor - "Task.Appraised" event
+Command - UpdatePopugEarnings
+Data - Amount
+Event - Analytic.TaskCostListUpdated
