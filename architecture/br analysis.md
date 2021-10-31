@@ -4,7 +4,7 @@
 Analysis:
 Actor - Any user
 Command - Login to task tracker dashboard
-Data - User login and password
+Data - User auth info
 Event - Task.Logined
 
 2) Requirement: Новые таски может создавать кто угодно (администратор, начальник, разработчик, менеджер и любая другая роль). У задачи должны быть описание, статус (выполнена или нет) и попуг, на которого заассайнена задача
@@ -18,28 +18,28 @@ Event - Task.Created
 Analysis:
 Actor - User with role admin or manager
 Command - Assign tasks
-Data - Nothing
+Data - Tasks with status open
 Event - Task.Assigned
 
 4) Requirement: Каждый сотрудник должен иметь возможность видеть в отдельном месте список заассайненных на него задач
 Analysis:
 Actor - Any user
 Command - List tasks
-Data - User ID
-Event - Task.Listed (?)
+Data - User
+Event - Task.Listed 
 
 5) Requirement: цены на задачу определяется единоразово, в момент появления в системе (можно с минимальной задержкой)
 Analysis:
 Actor - "Task.Created" event
 Command - Appraise task
-Data - task ID
+Data - Task
 Event - Task.Appraised
 
 6) Requirement: Каждый сотрудник должен иметь возможность отметить задачу выполненной.
 Analysis:
 Actor - Any user
 Command - Complete task
-Data - task ID
+Data - Task
 Event - Task.Completed
 
 # Accounting requirements
@@ -48,7 +48,7 @@ Event - Task.Completed
 Analysis:
 Actor - Any user
 Command - Login to accounting dashboard
-Data - User login and password
+Data - UserAuthInfo
 Event - Accounting.Logined
 
 2) Requirement: У каждого из сотрудников должен быть свой счёт, который показывает, сколько за сегодня он получил денег. У счёта должен быть аудитлог того, за что были списаны или начислены деньги, с подробным описанием каждой из задач.
@@ -56,14 +56,14 @@ Event - Accounting.Logined
 Analysis:
 Actor - "Task.Assigned" event
 Command - Add audit log to user account
-Data - User ID, task cost, task description
+Data - User ID, Amount, AuditLog Type, MetaInfo (task description)
 Event - Accounting.LogEntryAdded
 
 3) Requirement: деньги начисляются после выполнения задачи.
 Analysis:
 Actor - "Task.Completed" event
 Command - Add audit log to user account
-Data - User ID, task cost, task description
+Data - User ID, Amount, AuditLog Type, MetaInfo (task description)
 Event - Accounting.LogEntryAdded
 
 4) Requirement: считать текущий баланс
@@ -77,34 +77,35 @@ Event - Accounting.UserEarningsUpdated
 Analysis:
 Actor - Cronjob
 Command - PayDay
-Data - [userID payAmount] - array
+Data - [UserID, TotalUserBalance] - array
 Event - Accounting.PayDay
 
 6) Requirement: отправлять на почту сумму выплаты.
 Analysis:
 Actor - "Accounting.PayDay" event
 Command - Notify
-Data - userID userName payAmount
+Data - Email, Amount
 Event - Emailer.PayNotification
 
 7) Requirement: После выплаты баланса (в конце дня) он должен обнуляться, и в аудитлоге всех операций аккаунтинга должно быть отображено, что была выплачена сумма.
 Analysis:
 Actor - "Accounting.PayDay" event
 Command - Add audit log to user account
-Data - userID payAmount
+Data - UserID, Amount
 Event - Accounting.LogEntryAdded
 
 8) Requirement: Дешборд должен выводить количество заработанных топ-менеджментом за сегодня денег.
 Analysis:
 Actor - "Accounting.LogEntryAdded" event
 Command - Recalculate top earnings
-Data - amount
+Data - Amount, AuditLogType
 Event - Accounting.TopManagerEarnings
 
 9) Requirement: Дашборд должен выводить информацию по дням, а не за весь период сразу.
 Analysis:
 Actor - Any user
 Command - Get audit log
-Data - userID
-Event - Accounting.AuditLogRequested (?)
+Data - UserID
+Event - Accounting.AuditLogRequested
+
 
