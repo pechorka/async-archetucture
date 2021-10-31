@@ -77,19 +77,19 @@ Event - Accounting.UserEarningsUpdated
 Analysis:
 Actor - Cronjob
 Command - PayDay
-Data - [UserID, Amoun] - array
-Event - Biling.PayDay
+Data - [BillingSystem UserID, Amount] - array
+Event - Accounting.PayDay
 
 6) Requirement: отправлять на почту сумму выплаты.
 Analysis:
-Actor - "Biling.PayDay" event
+Actor - "Accounting.PayDay" event
 Command - Notify
 Data - Email, Amount
-Event - Emailer.PayNotification
+Event - Accounting.PayNotification
 
 7) Requirement: После выплаты баланса (в конце дня) он должен обнуляться, и в аудитлоге всех операций аккаунтинга должно быть отображено, что была выплачена сумма.
 Analysis:
-Actor - "Biling.PayDay" event
+Actor - "Accounting.PayDay" event
 Command - Add audit log to user account
 Data - Amount, BillingInfo
 Event - Accounting.LogEntryAdded
@@ -99,7 +99,7 @@ Analysis:
 Actor - "Accounting.LogEntryAdded" event
 Command - Recalculate top earnings
 Data - Amount, AuditLogType
-Event - Accounting.TopManagerEarnings
+Event - Accounting.TopManagerEarningsUpdated
 
 9) Requirement: Дашборд должен выводить информацию по дням, а не за весь период сразу.
 Analysis:
@@ -119,7 +119,7 @@ Event - Analytic.Logined
 
 2) Requirement: Нужно указывать, сколько заработал топ-менеджмент за сегодня
 Analysis:
-Actor - "Accounting.TopManagerEarnings" event
+Actor - "Accounting.TopManagerEarningsUpdated" event
 Command - Get top manager earnings
 Data - Amount
 Event - Analytic.TopManagerEarningsUpdated
